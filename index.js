@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const Queue = require('./queue');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 // const { dbConnect } = require('./db-mongoose');
@@ -69,6 +70,12 @@ let dogData = [{imageURL: 'http://www.dogster.com/wp-content/uploads/2015/05/Cut
   breed: 'Great Dane',
   story: 'Only survivor of mystery machine accident (rut roh)'}];
 
+const catQueue = new Queue();
+catData.forEach(cat => catQueue.enqueue(cat));
+
+const dogQueue = new Queue();
+dogData.forEach(dog => dogQueue.enqueue(dog));
+
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
     skip: (req, res) => process.env.NODE_ENV === 'test'
@@ -82,28 +89,30 @@ app.use(
 );
 
 app.get('/api/cat', (req, res) => {
-  if(catData.length === 0){
+  const firstCat = catQueue.first.value;
+  if(catData.length === null){
     res.json({message: 'No more cats to adopt!'});
   } else {
-    res.json(catData[0]);
+    res.json(firstCat);
   }
   
 });
 
 app.get('/api/dog', (req, res) => {
-  if(dogData.length === 0){
+  const firstDog = dogQueue.first.value;
+  if(dogData.length === null){
     res.json({message: 'No more dogs to adopt!'});
   } else {
-    res.json(dogData[0]);
+    res.json(firstDog);
   }
 });
 
 app.delete('/api/cat', (req, res) => {
-  res.json(catData.shift());
+  res.json(catQueue.dequeue());
 });
 
 app.delete('/api/dog', (req, res) => {
-  res.json(dogData.shift());
+  res.json(dogQueue.dequeue());
 });
 
 function runServer(port = PORT) {
