@@ -71,10 +71,18 @@ let dogData = [{imageURL: 'http://www.dogster.com/wp-content/uploads/2015/05/Cut
   story: 'Only survivor of mystery machine accident (rut roh)'}];
 
 const catQueue = new Queue();
-catData.forEach(cat => catQueue.enqueue(cat));
+function populateCats() {
+  catData.forEach(cat => catQueue.enqueue(cat));
+}
+
 
 const dogQueue = new Queue();
-dogData.forEach(dog => dogQueue.enqueue(dog));
+function populateDogs() {
+  dogData.forEach(dog => dogQueue.enqueue(dog));
+}
+
+populateCats();
+populateDogs();
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -121,6 +129,24 @@ app.delete('/api/cat', (req, res) => {
 
 app.delete('/api/dog', (req, res) => {
   res.json(dogQueue.dequeue());
+});
+
+app.post('/api/cat', (req, res) => {
+  if (catQueue.first === null) {
+    populateCats();
+    res.json({message: 'We repossessed the cats!'});
+  } else {
+    res.json({message: 'There are still cats to adopt!'});
+  }
+});
+
+app.post('/api/dog', (req, res) => {
+  if (dogQueue.first === null) {
+    populateDogs();
+    res.json({message: 'We repossessed the dogs!'});
+  } else {
+    res.json({message: 'There are still dogs to adopt!'});
+  }
 });
 
 function runServer(port = PORT) {
