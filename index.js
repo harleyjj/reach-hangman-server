@@ -89,21 +89,29 @@ app.use(
 );
 
 app.get('/api/cat', (req, res) => {
-  const firstCat = catQueue.first.value;
-  if(firstCat === null){
+  if (catQueue.first === null) {
     res.json({message: 'No more cats to adopt!'});
   } else {
-    res.json(firstCat);
+    const firstCat = catQueue.first.value;
+    if(firstCat === null){
+      res.json({message: 'No more cats to adopt!'});
+    } else {
+      res.json(firstCat);
+    }
   }
   
 });
 
 app.get('/api/dog', (req, res) => {
-  const firstDog = dogQueue.first.value;
-  if(firstDog === null){
+  if (dogQueue.first === null) {
     res.json({message: 'No more dogs to adopt!'});
   } else {
-    res.json(firstDog);
+    const firstDog = dogQueue.first.value;
+    if(firstDog === null){
+      res.json({message: 'No more dogs to adopt!'});
+    } else {
+      res.json(firstDog);
+    }
   }
 });
 
