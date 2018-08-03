@@ -1,45 +1,63 @@
-# Thinkful Backend Template
+# Petful Server
 
-A template for developing and deploying Node.js apps.
+The petful server supports the following api calls, where <pet> can be either dog or cat
 
-## Getting started
+GET https://petful-server-alex-harley.herokuapp.com/api/<pet>
 
-### Setting up a project
+DELETE https://petful-server-alex-harley.herokuapp.com/api/<pet>
 
-* Move into your projects directory: `cd ~/YOUR_PROJECTS_DIRECTORY`
-* Clone this repository: `git clone https://github.com/Thinkful-Ed/backend-template YOUR_PROJECT_NAME`
-* Move into the project directory: `cd YOUR_PROJECT_NAME`
-* Install the dependencies: `npm install`
-* Create a new repo on GitHub: https://github.com/new
-    * Make sure the "Initialize this repository with a README" option is left unchecked
-* Update the remote to point to your GitHub repository: `git remote set-url origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME`
+POST https://petful-server-alex-harley.herokuapp.com/api/<pet>
 
-### Working on the project
+GET will respond with either a JSON object containing pet information:
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Run the development task: `npm start`
-    * Starts a server running at http://localhost:8080
-    * Automatically restarts when any of your files change
+{
+  imageURL: <string>, 
+  imageDescription: <string>,
+  name: <string>,
+  sex: <string>,
+  age: <num> in years,
+  breed: <string>,
+  story: <string>
+}
 
-## Databases
+or a message:
 
-By default, the template is configured to connect to a MongoDB database using Mongoose.  It can be changed to connect to a PostgreSQL database using Knex by replacing any imports of `db-mongoose.js` with imports of `db-knex.js`, and uncommenting the Postgres `DATABASE_URL` lines in `config.js`.
+{
+	message: <string>
+}
 
-## Deployment
+DELETE will respond with either a JSON object containing the removed pet's information:
 
-Requires the [Heroku CLI client](https://devcenter.heroku.com/articles/heroku-command-line).
+{
+  imageURL: <string>, 
+  imageDescription: <string>,
+  name: <string>,
+  sex: <string>,
+  age: <num> in years,
+  breed: <string>,
+  story: <string>
+}
 
-### Setting up the project on Heroku
+or an empty response:
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Create the Heroku app: `heroku create PROJECT_NAME`
+{}
 
-* If your backend connects to a database, you need to configure the database URL:
-    * For a MongoDB database: `heroku config:set DATABASE_URL=mongodb://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-    * For a PostgreSQL database: `heroku config:set DATABASE_URL=postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
+POST will reset the pets in the respective dataset and reply with, if the dataset is empty from adoption:
 
-* If you are creating a full-stack app, you need to configure the client origin: `heroku config:set CLIENT_ORIGIN=https://www.YOUR_DEPLOYED_CLIENT.com`
+{
+	message: <string>
+}
 
-### Deploying to Heroku
+or reply with:
 
-* Push your code to Heroku: `git push heroku master`
+{
+	message: <string>
+}
+
+
+The server uses:
+
+* Node.js
+* Express.js
+* Morgan.js
+* A standard Queue class implemented in Javascript
