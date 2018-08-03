@@ -90,7 +90,7 @@ app.use(
 
 app.get('/api/cat', (req, res) => {
   const firstCat = catQueue.first.value;
-  if(catData.length === null){
+  if(firstCat === null){
     res.json({message: 'No more cats to adopt!'});
   } else {
     res.json(firstCat);
@@ -100,7 +100,7 @@ app.get('/api/cat', (req, res) => {
 
 app.get('/api/dog', (req, res) => {
   const firstDog = dogQueue.first.value;
-  if(dogData.length === null){
+  if(firstDog === null){
     res.json({message: 'No more dogs to adopt!'});
   } else {
     res.json(firstDog);
