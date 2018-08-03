@@ -2,11 +2,11 @@
 
 The petful server supports the following api calls, where `<pet>` can be either dog or cat
 
-GET https://petful-server-alex-harley.herokuapp.com/api/`<pet>`
+`GET https://petful-server-alex-harley.herokuapp.com/api/<pet>`
 
-DELETE https://petful-server-alex-harley.herokuapp.com/api/`<pet>`
+`DELETE https://petful-server-alex-harley.herokuapp.com/api/<pet>`
 
-POST https://petful-server-alex-harley.herokuapp.com/api/`<pet>`
+`POST https://petful-server-alex-harley.herokuapp.com/api/<pet>`
 
 GET will respond with either a JSON object containing pet information:
 
