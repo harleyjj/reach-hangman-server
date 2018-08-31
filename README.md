@@ -1,63 +1,24 @@
-# Petful Server
+# REACH Hangman Server
 
-The petful server supports the following api calls, where `<pet>` can be either dog or cat
+The REACH Hangman server supports the following api call:
 
-`GET https://petful-server-alex-harley.herokuapp.com/api/<pet>`
+`GET https://petful-server-alex-harley.herokuapp.com/words`
 
-`DELETE https://petful-server-alex-harley.herokuapp.com/api/<pet>`
+Since it simply relaying a response from the Linkedin REACH Word Dictionary API, the following descriptions are adapted from their documentation:
 
-`POST https://petful-server-alex-harley.herokuapp.com/api/<pet>`
+It provides a plain text response, with one word per line.
 
-GET will respond with either a JSON object containing pet information:
+The following parameters are optional, and applied in the following order:
 
-`{
-  imageURL: <string>, 
-  imageDescription: <string>,
-  name: <string>,
-  sex: <string>,
-  age: <num> in years,
-  breed: <string>,
-  story: <string>
-}`
+URL Parameter: difficulty; Legal Values: integer from 1-10; Purpose: Filters returned words based on the difficulty level provided: 1 is the lowest level and 10 is the highest level
 
-or a message:
+URL Parameter: minLength; Legal Values: Integer >= 0; Purpose: Filters returned words to ensure they are at least as long as the provided length.  Providing 0 will return all words, providing a number larger than the length of the longest word will return an empty result.
 
-`{
-	message: <string>
-}`
-
-DELETE will respond with either a JSON object containing the removed pet's information:
-
-`{
-  imageURL: <string>, 
-  imageDescription: <string>,
-  name: <string>,
-  sex: <string>,
-  age: <num> in years,
-  breed: <string>,
-  story: <string>
-}`
-
-or an empty response:
-
-`{}`
-
-POST will reset the pets in the respective dataset and reply with, if the dataset is empty from adoption:
-
-`{
-	message: <string>
-}`
-
-or reply with:
-
-`{
-	message: <string>
-}`
-
+URL Parameter: maxLength; Legal Values: Integer >= 0; Purpose: Filters returned words to ensure they are shorter than the provided length.  Providing 0 will return an empty result, providing a number larger than the length of the longest word will return all words.
 
 The server uses:
 
 * Node.js
 * Express.js
 * Morgan.js
-* A standard Queue class implemented in Javascript
+* Node-Fetch package
