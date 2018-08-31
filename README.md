@@ -2,7 +2,7 @@
 
 The REACH Hangman server supports the following api call:
 
-`GET https://petful-server-alex-harley.herokuapp.com/words`
+`GET https://reach-hangman-server.herokuapp.com/words`
 
 Since it simply relaying a response from the Linkedin REACH Word Dictionary API, the following descriptions are adapted from their documentation:
 
