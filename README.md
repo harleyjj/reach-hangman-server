@@ -22,3 +22,23 @@ The server uses:
 * Express.js
 * Morgan.js
 * Node-Fetch package
+
+# Run REACH Hangman Server locally:
+
+Clone the repo and cd into the directory where it was cloned (the project directory).
+
+In the project directory, run:
+
+### `npm install`
+
+Once the node modules are finished installing, run:
+
+### `npm start`
+
+or 
+
+### `nodemon start`
+
+The server should launch and listen on port 8080.  You can then call the above api, with the base url being:
+
+`GET http://localhost:8080/words`
